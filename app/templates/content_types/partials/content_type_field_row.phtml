@@ -1,0 +1,33 @@
+<?php
+$selectOptions = [
+    'text' => 'Text input',
+    'textarea' => 'Textarea',
+    'html' => 'HTML',
+    'number' => 'Number',
+];
+
+$id = @$this->params['id'];
+?><div class="row" data-id="<?= $id ?>">
+    <input type="hidden" name="fields[<?= $id ?>][id]" value="<?= @$this->params['id'] ?>">
+    <div class="medium-5 columns">
+        <label>Name
+        <input type="text" name="fields[<?= $id ?>][name]" value="<?= @$this->params['name'] ?>" class="name">
+        </label>
+    </div>
+    <div class="medium-5 columns">
+        <label>
+            Data input
+            <select name="fields[<?= $id ?>][data_type]">
+                <?php foreach($selectOptions as $value => $text): ?>
+                    <option value="<?= $value ?>" <?= ($value == @$this->params['data_type']) ? 'selected' : '' ?>><?= $text ?></option>
+                <?php endforeach ?>
+            </select>
+        </label>
+    </div>
+    <div class="medium-2 columns">
+        <label>Field name
+        <input type="text" name="fields[<?= $id ?>][field_name]" value="<?= @$this->params['field_name'] ?>" class="field_name">
+        </label>
+    </div>
+</div>
+<hr class="show-for-small-only">

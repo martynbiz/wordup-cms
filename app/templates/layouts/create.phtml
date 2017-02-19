@@ -1,0 +1,28 @@
+<?php $this->layout('default', [
+    'title' => 'Layouts - Create',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('content_types') ?>">Layouts</a></li>
+            <li><span class="show-for-sr">Current: </span> Create</li>
+        </ul>
+    </nav>
+
+    <form method="POST" action="<?= $this->pathFor('layouts_post'); ?>">
+        <?= $this->insert('layouts/partials/layout_fields') ?>
+
+        <?php if ($parentId = @$this->params['parent_id']): ?>
+            <input type="hidden" name="parent_id" value="<?= $parentId ?>">
+        <?php endif ?>
+
+        <div class="row">
+            <div class="medium-12 columns">
+                <button type="submit" class="button">Create</button>
+                <a href="<?= $this->pathFor('layouts') ?>" class="secondary button">Cancel</a>
+            </div>
+        </div>
+    </form>
+<?php $this->replace() ?>

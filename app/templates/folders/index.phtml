@@ -1,0 +1,19 @@
+<?php $this->layout('default', [
+    'title' => 'Folders',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('folders') ?>">Folders</a></li>
+            <li><span class="show-for-sr">Current: </span> News</li>
+        </ul>
+    </nav>
+
+    <div class="callout clearfix">
+        <?= $this->insert('folders/partials/folder_structure', [
+            'is_top_level' => true,
+        ]) ?>
+    </div>
+<?php $this->replace() ?>

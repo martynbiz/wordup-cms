@@ -1,0 +1,23 @@
+<div class="callout">
+    <label>Name
+        <input type="text" name="name" value="<?= @$this->params['name'] ?>">
+    </label>
+    <label>Description
+        <input type="text" name="description" value="<?= @$this->params['description'] ?>">
+    </label>
+</div>
+
+<div class="callout">
+    <h3>Template fields</h3>
+    <?php foreach ($this->content_type->fields as $i => $field): ?>
+        <?php if (in_array($field->data_type, ['textarea', 'html'])): ?>
+            <label><?= $field->name ?>
+                <textarea rows="10" name="content_values[<?= $field->field_name ?>]"><?= @$this->params['content_values'][$field->field_name] ?></textarea>
+            </label>
+        <?php else: ?>
+            <label><?= $field->name ?>
+                <input type="<?= $field->data_type ?>" name="content_values[<?= $field->field_name ?>]" value="<?= @$this->params['content_values'][$field->field_name] ?>">
+            </label>
+        <?php endif ?>
+    <?php endforeach ?>
+</div>

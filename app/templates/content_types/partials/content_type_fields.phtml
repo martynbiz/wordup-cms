@@ -1,0 +1,38 @@
+<?php
+$fields = @$this->params['fields'];
+?>
+<ul class="tabs" data-tabs id="content_type_tabs">
+    <li class="tabs-title is-active"><a href="#tab1">General</a></li>
+    <li class="tabs-title"><a href="#tab2">Fields</a></li>
+    <li class="tabs-title"><a href="#tab3">Template</a></li>
+</ul>
+<div class="tabs-content" data-tabs-content="content_type_tabs">
+    <div class="tabs-panel is-active" id="tab1">
+        <div class="row">
+            <div class="medium-6 columns">
+                <label>Name
+                    <input type="text" name="name" value="<?= @$this->params['name'] ?>">
+                </label>
+                <label>Description
+                    <input type="text" name="description" value="<?= @$this->params['description'] ?>">
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="tabs-panel" id="tab2">
+        <button type="button" id="add_field_row_btn" class="button"><i class="fa fa-plus"></i> Add row</button>
+        <div id="field_rows">
+            <?php foreach($this->params['fields'] as $field): ?>
+                <?= $this->insert('content_types/partials/content_type_field_row', [
+                    'params' => $field,
+                    'i' => $i,
+                ]) ?>
+            <?php endforeach ?>
+        </div>
+    </div>
+    <div class="tabs-panel" id="tab3">
+        <label>Template
+        <textarea name="template" id="template" rows="10"><?= @$this->params['template'] ?></textarea>
+        </label>
+    </div>
+</div>

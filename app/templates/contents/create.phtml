@@ -1,0 +1,63 @@
+<?php $this->layout('default', [
+    'title' => 'Assets - Content Types',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('folders') ?>">Folders</a></li>
+            <li><a href="<?= $this->pathFor('folders_edit', ['id' => $this->folder->id]) ?>"><?= $this->folder->name ?></a></li>
+            <li>Content</li>
+            <li><span class="show-for-sr">Current: </span> Create</li>
+        </ul>
+    </nav>
+
+    <form method="POST" action="<?= $this->pathFor('contents_post', ['folder_id' => $this->folder->id]); ?>">
+        <div class="row">
+            <div class="medium-12 columns">
+                <?php if (!$contentTypeId = @$this->params['content_type_id']): ?>
+                    <p>Select content type:</p>
+                    <select name="content_type_id">
+                        <?php foreach($this->content_types as $contentType): ?>
+                            <option value="<?= $contentType->id ?>"><?= $contentType->name ?></options>
+                        <?php endforeach ?>
+                    </select>
+
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <button type="submit" formaction="<?= $this->pathFor('contents_create', ['folder_id' => $this->folder->id]); ?>" formmethod="get" class="button"><?= $this->translate('select_content_type_button') ?></button>
+                            <a href="<?= $this->pathFor('content_types') ?>" class="secondary button"><?= $this->translate('cancel_button') ?></a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <?= $this->insert('contents/partials/content_fields') ?>
+
+                    <input type="hidden" name="content_type_id" value="<?= $contentTypeId ?>">
+
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <button type="submit" class="button">Create</button>
+                            <a href="<?= $this->pathFor('content_types') ?>" class="secondary button">Cancel</a>
+                        </div>
+                    </div>
+                <?php endif ?>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/x-handlebars-template" id="new_field_row">
+        <?= $this->insert('content_types/partials/content_type_field_row', [
+            'params' => [
+                'id' => '{{ id }}',
+                'name' => '',
+                'data_type' => '',
+                'field_name' => '',
+            ]
+        ]) ?>
+    </script>
+<?php $this->replace() ?>
+
+<?php $this->section('scripts') ?>
+    <?= $this->insert('content_types/partials/form_scripts'); ?>
+<?php $this->replace() ?>

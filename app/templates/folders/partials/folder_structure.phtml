@@ -1,0 +1,17 @@
+<ul class="folders">
+    <?php foreach($this->folders as $folder): ?>
+    <li style="position: relative">
+        <?php if ($this->is_top_level): ?>
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
+        <?php else: ?>
+            <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+        <?php endif ?>
+        <a href="<?= $this->pathFor('folders_edit', ['id' => $folder->id]) ?> "><?= $folder->name ?></a>
+        <!-- <span class="warning badge">1</span> -->
+        <?= $this->insert('folders/partials/folder_structure', [
+            'folders' => $folder->subfolders,
+            'is_top_level' => false,
+        ]) ?>
+    </li>
+    <?php endforeach ?>
+</ul>

@@ -1,0 +1,38 @@
+<?php
+$isMenuLink = @$this->params['menu_link'];
+if (is_null($isMenuLink)) $isMenuLink = 1; // default
+?>
+
+<div class="row">
+    <div class="medium-8 columns">
+        <label>Name
+            <input type="text" name="name" value="<?= @$this->params['name'] ?>" class="name">
+        </label>
+        <label>Description
+            <input type="text" name="description" value="<?= @$this->params['description'] ?>">
+        </label>
+        <label>Directory name
+            <input type="text" name="dir_name" value="<?= @$this->params['description'] ?>" class="dir_name">
+        </label>
+    </div>
+    <div class="medium-4 columns">
+        <p>Show in menu?</p>
+        <div class="switch tiny">
+            <input class="switch-input" id="menu_link" type="checkbox" name="menu_link" value="1" <?= ($isMenuLink) ? 'checked' : '' ?>>
+            <label class="switch-paddle" for="menu_link">
+                <span class="show-for-sr">Show in menu?</span>
+                <span class="switch-active" aria-hidden="true">Yes</span>
+                <span class="switch-inactive" aria-hidden="true">No</span>
+            </label>
+        </div>
+        <p>Is active?</p>
+        <div class="switch tiny">
+            <input class="switch-input" id="active" type="checkbox" name="active" value="1" <?= ($isMenuLink) ? 'checked' : '' ?>>
+            <label class="switch-paddle" for="active">
+                <span class="show-for-sr">Show in menu?</span>
+                <span class="switch-active" aria-hidden="true">Yes</span>
+                <span class="switch-inactive" aria-hidden="true">No</span>
+            </label>
+        </div>
+    </div>
+</div>

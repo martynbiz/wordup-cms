@@ -1,0 +1,75 @@
+<?php $this->layout('default', [
+    'title' => 'Folders',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('folders') ?>">Folders</a></li>
+            <li><span class="show-for-sr">Current: </span> <?= $this->folder->name ?></li>
+        </ul>
+    </nav>
+
+    <div class="callout clearfix">
+        <form method="POST" action="<?= $this->pathFor('folders_publish', ['id' => $this->folder->id]) ?>">
+            <button type="submit" class="button float-right"><i class="fa fa-cloud-upload"></i> Publish</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="medium-3 columns">
+            <div style="padding: 15px; background: #eee;">
+                <a href="<?= $this->pathFor('folders_create') ?>?parent_id=<?= $this->folder->id ?>" class="button"><i class="fa fa-plus"></i> Create Folder</a>
+
+                <div style="overflow-y: scroll; max-height: 400px;">
+                    <?= $this->insert('folders/partials/folder_structure', [
+                        'folders' => $this->folder->subfolders,
+                        'is_top_level' => false,
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+        <div class="medium-9 columns">
+            <div class="row">
+                <div class="medium-12 columns">
+                    <div class="callout clearfix">
+                        <form method="POST" action="<?= $this->pathFor('folders_put', ['id' => $this->folder->id]); ?>">
+                            <?= $this->insert('folders/partials/folder_fields') ?>
+                            <input type="hidden" name="_METHOD" value="PUT">
+                            <div class="row">
+                                <div class="medium-12 columns">
+                                    <button type="submit" class="button"><?= $this->translate('update_button') ?></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="medium-12 columns">
+                    <div class="callout clearfix">
+                        <a href="<?= $this->pathFor('contents_create', ['folder_id' => $this->folder->id]) ?>" class="button float-right"><i class="fa fa-plus"></i> <?= $this->translate('create_content_button') ?></a>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th class="hide-for-small-only">Content Type</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($this->folder->contents as $content): ?>
+                                    <tr>
+                                        <td><a href="#"><?= $content->name ?></a></td>
+                                        <td class="hide-for-small-only"><?= $content->content_type->name ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php $this->replace() ?>

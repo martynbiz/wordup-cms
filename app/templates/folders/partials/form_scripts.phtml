@@ -1,0 +1,9 @@
+<script>
+// generate ID from name and fill ID field event handler
+$("input.name").change(function(e) {
+    // generate id from name
+    var id = $(this).val().replace(/ /g,"-").toLowerCase();
+    // populate id field
+    $(this).closest(".row").find("input.dir_name").val(id);
+});
+</script>

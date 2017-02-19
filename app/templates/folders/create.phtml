@@ -1,0 +1,37 @@
+<?php
+$isMenuLink = @$this->params['menu_link'];
+if (is_null($isMenuLink)) $isMenuLink = 1; // default is checked
+?>
+
+<?php $this->layout('default', [
+    'title' => 'Folders - Create',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('content_types') ?>">Folders</a></li>
+            <li><span class="show-for-sr">Current: </span> Create</li>
+        </ul>
+    </nav>
+
+    <form method="POST" action="<?= $this->pathFor('folders_post'); ?>">
+        <?= $this->insert('folders/partials/folder_fields') ?>
+
+        <?php if ($parentId = @$this->params['parent_id']): ?>
+            <input type="hidden" name="parent_id" value="<?= $parentId ?>">
+        <?php endif ?>
+
+        <div class="row">
+            <div class="medium-12 columns">
+                <button type="submit" class="button">Create</button>
+                <a href="<?= $this->pathFor('folders') ?>" class="secondary button">Cancel</a>
+            </div>
+        </div>
+    </form>
+<?php $this->replace() ?>
+
+<?php $this->section('scripts') ?>
+    <?= $this->insert('folders/partials/form_scripts') ?>
+<?php $this->replace() ?>

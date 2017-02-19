@@ -1,0 +1,33 @@
+<?php $this->layout('layouts/default', [
+    'title' => 'Assets - Content Types',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li>Content Types</li>
+        </ul>
+    </nav>
+
+    <div class="callout clearfix">
+        <a href="<?= $this->pathFor('content_types_create') ?>" class="button float-right"><i class="fa fa-plus"></i> Create Content Type</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th class="hide-for-small-only">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->content_types as $contentType): ?>
+                <tr>
+                    <td><a href="<?= $this->pathFor('content_types_edit', ['id' => $contentType->id]) ?>"><?= $contentType->name ?></a></td>
+                    <td class="hide-for-small-only"><?= $contentType->description ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php $this->replace() ?>

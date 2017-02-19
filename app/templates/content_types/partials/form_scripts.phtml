@@ -1,0 +1,48 @@
+<script src="/bower_components/handlebars/handlebars.js"></script>
+<script>
+  $(function() {
+
+      // allow us to apply js to new rows
+      var applyJsToNewRow = function(container) {
+
+          // generate ID from name and fill ID field event handler
+          $("input.name", container).change(function(e) {
+              // generate id from name
+              var id = $(this).val().replace(/ /g,"_").toLowerCase();
+              // populate id field
+              $(this).closest(".row").find("input.field_name").val(id);
+          });
+      };
+
+      // apply to existing rows
+      applyJsToNewRow($("#field_rows"));
+
+      // add field row button event handler
+      $("#add_field_row_btn").click(function(e) {
+          // get the latest ID
+          var latestId = 0;
+          $("#field_rows .row").each(function(index) {
+              var id = $(this).data('id');
+              if (parseInt(id) > latestId) latestId = id;
+          });
+          latestId++;
+          // create new field
+          var template = Handlebars.compile($("#new_field_row").html());
+          var html = template({id: latestId});
+          var newRow = $(html);
+          console.log(newRow);
+          // apply js behaviour to new html
+          applyJsToNewRow(newRow);
+          // get html from template and append to row container
+          $("#field_rows").append(newRow);
+      });
+  });
+
+  /*
+  <div class="row">
+    <div class="medium-6">{{ fields.column_1 }}</div>
+    <div class="medium-6">{{ fields.column_2 }}</div>
+  </div>
+  */
+
+</script>

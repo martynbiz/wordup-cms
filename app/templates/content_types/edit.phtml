@@ -1,0 +1,44 @@
+<?php $this->layout('layouts/default', [
+    'title' => 'Assets - Content Types',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('content_types') ?>">Content Types</a></li>
+            <li><span class="show-for-sr">Current: </span> <?= $this->content_type->name ?></li>
+        </ul>
+    </nav>
+
+    <form method="POST" action="<?= $this->pathFor('content_types_put', ['id' => $this->content_type->id]); ?>">
+        <div class="row">
+            <div class="medium-12 columns">
+                <?= $this->insert('content_types/partials/content_type_fields') ?>
+
+                <input type="hidden" name="_METHOD" value="PUT">
+
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <button type="submit" class="button">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <script type="text/x-handlebars-template" id="new_field_row">
+        <?= $this->insert('content_types/partials/content_type_field_row', [
+            'params' => [
+                'id' => '{{ id }}',
+                'name' => '',
+                'data_type' => '',
+                'field_name' => '',
+            ]
+        ]) ?>
+    </script>
+<?php $this->replace() ?>
+
+<?php $this->section('scripts') ?>
+    <?= $this->insert('content_types/partials/form_scripts'); ?>
+<?php $this->replace() ?>

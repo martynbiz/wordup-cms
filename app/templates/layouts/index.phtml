@@ -1,0 +1,30 @@
+<?php $this->layout('default', [
+    'title' => 'Layouts',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('folders') ?>">Layouts</a></li>
+            <li><span class="show-for-sr">Current: </span> News</li>
+        </ul>
+    </nav>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th class="hide-for-small-only">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->layouts as $layout): ?>
+                <tr>
+                    <td><a href="<?= $this->pathFor('layouts_edit', ['id' => $layout->id]) ?>"><?= $layout->name ?></a></td>
+                    <td class="hide-for-small-only"><?= $layout->description ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php $this->replace() ?>
