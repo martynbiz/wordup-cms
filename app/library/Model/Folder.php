@@ -65,6 +65,17 @@ class Folder extends Base
             'media' => [],
         ];
 
+        // populate formatters
+        $formatters = Formatters::all();
+        foreach ($formatters as $f) {
+            $className = $availableFormatters[$f->name];
+            $options = json_decode($f->options);
+            $formatterObj = new $className($options, [
+                'folder' => $this,
+            ]);
+            array_push($data['formatters'], $formatterObj->render());
+        }
+
         $contents = $this->contents;
         $rendered = '';
         foreach ($contents as $content) {
