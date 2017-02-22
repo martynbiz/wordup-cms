@@ -1,0 +1,52 @@
+<?php $this->layout('default', [
+    'title' => 'Formatters',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('formatters') ?>">Formatters</a></li>
+            <li><span class="show-for-sr">Current: </span> Create</li>
+        </ul>
+    </nav>
+
+    <?php if (!$formatterTypeId = @$this->params['formatter_type_id']): ?>
+        <form method="GET" action="<?= $this->pathFor('formatters_create'); ?>">
+            <div class="row">
+                <div class="medium-12 columns">
+                    <p>Select formatter type:p>
+                    <select name="formatter_type_id">
+                        <?php foreach($this->formatter_types as $typeId => $formatterType): ?>
+                            <option value="<?= $typeId ?>"><?= $formatterType::getName() ?></options>
+                        <?php endforeach ?>
+                    </select>
+
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <button type="submit" class="button"><?= $this->translate('select_formatter_type_button') ?></button>
+                            <a href="<?= $this->pathFor('formatters') ?>" class="secondary button"><?= $this->translate('cancel_button') ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?php else: ?>
+        <form method="POST" action="<?= $this->pathFor('formatters_post'); ?>">
+            <div class="row">
+                <div class="medium-12 columns">
+                    <?= $this->insert('formatters/partials/formatter_fields') ?>
+
+                    <input type="hidden" name="formatter_type_id" value="<?= $formatterTypeId ?>">
+
+                    <div class="row">
+                        <div class="medium-12 columns">
+                            <button type="submit" class="button">Create</button>
+                            <a href="<?= $this->pathFor('formatters') ?>" class="secondary button">Cancel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?php endif ?>
+<?php $this->replace() ?>

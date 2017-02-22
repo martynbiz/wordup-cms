@@ -5,14 +5,12 @@
 
 namespace App\Formatter;
 
-use App\Model\Folder;
-
 class Navigation extends AbstractFormatter implements FormatterInterface
 {
     /**
      * Name of formatter
      */
-    protected static $name = 'Navigation';
+    protected static $name = 'Sitemap';
 
     /**
      * Will return the option that this formatter requires
@@ -21,8 +19,8 @@ class Navigation extends AbstractFormatter implements FormatterInterface
     public static function getFields()
     {
         return [
-            'folder_id' => [
-                'label' => 'Folder ID',
+            'root_folder' => [
+                'label' => 'Root folder ID',
                 'type' => 'text',
             ],
             'before_output' => [
@@ -54,17 +52,9 @@ class Navigation extends AbstractFormatter implements FormatterInterface
      */
     public function render()
     {
-        $rootFolder = Folder::find((int) $this->options['folder_id']);
-        $subFolders = $rootFolder->subfolders();
+        $rootFolder = Folder::find((int) $this->options['root_folder']);
+        $subFolders = $rootFolder->subfolder();
 
-        $html = $this->options['before_output'];
-        foreach($subFolders as $folder) {
-            $html.= $this->options['before_link'];
-            $html.= '<a href="#">' . $folder->name . '</a>';
-            $html.= $this->options['after_link'];
-        }
-        $html.= $this->options['after_output'];
 
-        return $html;
     }
 }

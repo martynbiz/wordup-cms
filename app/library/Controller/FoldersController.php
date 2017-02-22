@@ -16,20 +16,6 @@ class FoldersController extends BaseController
         ]);
     }
 
-    public function publish($request, $response, $args)
-    {
-        $dir = '/var/www/wordup-live';
-        $container = $this->getContainer();
-        $container['filesystem']->emptyDir($dir);
-
-        $folder = Folder::find((int)$args['id']);
-        $folder->publish($dir);
-
-        return $this->render('folders/publish', [
-            'result' => $result,
-        ]);
-    }
-
     public function create($request, $response, $args)
     {
         return $this->render('folders/create', [
@@ -74,5 +60,21 @@ class FoldersController extends BaseController
 
         $router = $this->getContainer()['router'];
         return $this->redirect($router->pathFor('folders'));
+    }
+
+    public function publish($request, $response, $args)
+    {
+        $dir = '/var/www/wordup-live';
+        $container = $this->getContainer();
+        $container['filesystem']->emptyDir($dir);
+
+        $container = $this->getContainer();
+
+        $folder = Folder::find((int)$args['id']);
+        $folder->publish($dir, $container->get('settings')['formatters']);
+
+        return $this->render('folders/publish', [
+            'result' => $result,
+        ]);
     }
 }

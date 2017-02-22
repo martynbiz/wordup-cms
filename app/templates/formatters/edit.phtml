@@ -1,0 +1,29 @@
+<?php $this->layout('default', [
+    'title' => 'Formatters',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><a href="<?= $this->pathFor('formatters') ?>">Formatters</a></li>
+            <li><span class="show-for-sr">Current: </span> <?= $this->formatter->name ?></li>
+        </ul>
+    </nav>
+
+    <form method="POST" action="<?= $this->pathFor('formatters_put', ['id' => $this->formatter->id]); ?>">
+        <div class="row">
+            <div class="medium-12 columns">
+                <?= $this->insert('formatters/partials/formatter_fields') ?>
+
+                <input type="hidden" name="_METHOD" value="PUT">
+
+                <div class="row">
+                    <div class="medium-12 columns">
+                        <button type="submit" class="button">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+<?php $this->replace() ?>

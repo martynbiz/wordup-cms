@@ -39,3 +39,12 @@ $app->group('/layouts', function() use ($app) {
     $app->put('/{id}', '\App\Controller\LayoutsController:update')->setName('layouts_put');
     $app->delete('/{id}', '\App\Controller\LayoutsController:delete')->setName('layouts_delete');
 });
+
+$app->group('/formatters', function() use ($app) {
+    $app->get('', '\App\Controller\FormattersController:index')->setName('formatters');
+    $app->get('/create', '\App\Controller\FormattersController:create')->setName('formatters_create');
+    $app->post('', '\App\Controller\FormattersController:insert')->setName('formatters_post');
+    $app->get('/{id}/edit', '\App\Controller\FormattersController:edit')->setName('formatters_edit');
+    $app->put('/{id}', '\App\Controller\FormattersController:update')->setName('formatters_put');
+    $app->delete('/{id}', '\App\Controller\FormattersController:delete')->setName('formatters_delete');
+});

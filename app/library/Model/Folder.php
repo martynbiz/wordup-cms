@@ -3,6 +3,8 @@ namespace App\Model;
 
 use Handlebars\Handlebars;
 
+use App\Model\Formatter;
+
 class Folder extends Base
 {
     /**
@@ -51,9 +53,43 @@ class Folder extends Base
     }
 
     /**
+     * @param string $baseDir
+     */
+    public function publish($baseDir, $formatterTypes)
+    {
+        $this->publishRecursive([$this], $baseDir, $formatterTypes);
+    }
+
+    /**
+     *
+     */
+    protected function publishRecursive($folders, $baseDir, $formatterTypes)
+    {
+        foreach($folders as $folder) {
+
+            if ($folder->parent_id > 0) {
+                $dir = $baseDir . '/' . $folder->dir_name;
+                mkdir($dir);
+            } else {
+                $dir = $baseDir;
+            }
+
+            // create index.html file inside directory
+            $file = $dir . '/index.html';
+            file_put_contents($file, $folder->render($formatterTypes));
+
+            // build subdirs
+            $subfolders = $folder->subfolders;
+            if ($subfolders) {
+                $this->publishRecursive($subfolders, $dir, $formatterTypes);
+            }
+        }
+    }
+
+    /**
      * Will render the folder
      */
-    public function render()
+    public function render($formatterTypes)
     {
         $data = [
             'meta' => [
@@ -66,14 +102,14 @@ class Folder extends Base
         ];
 
         // populate formatters
-        $formatters = Formatters::all();
-        foreach ($formatters as $f) {
-            $className = $availableFormatters[$f->name];
-            $options = json_decode($f->options);
-            $formatterObj = new $className($options, [
+        $formatters = Formatter::all();
+        foreach ($formatters as $formatter) {
+            $className = $formatterTypes[$formatter->formatter_type_id];
+            $options = json_decode($formatter->options, true);
+            $f = new $className($options, [
                 'folder' => $this,
             ]);
-            array_push($data['formatters'], $formatterObj->render());
+            $data['formatters']['_' . $formatter->id] = $f->render();
         }
 
         $contents = $this->contents;
@@ -88,39 +124,5 @@ class Folder extends Base
         $rendered = $engine->render($this->layout->template, $data);
 
         return $rendered;
-    }
-
-    /**
-     * @param string $baseDir
-     */
-    public function publish($baseDir)
-    {
-        $this->publishRecursive([$this], $baseDir);
-    }
-
-    /**
-     *
-     */
-    protected function publishRecursive($folders, $baseDir)
-    {
-        foreach($folders as $folder) {
-
-            if ($folder->parent_id > 0) {
-                $dir = $baseDir . '/' . $folder->dir_name;
-                mkdir($dir);
-            } else {
-                $dir = $baseDir;
-            }
-
-            // create index.html file inside directory
-            $file = $dir . '/index.html';
-            file_put_contents($file, $folder->render());
-
-            // build subdirs
-            $subfolders = $folder->subfolders;
-            if ($subfolders) {
-                $this->publishRecursive($subfolders, $dir);
-            }
-        }
     }
 }

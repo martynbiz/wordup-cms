@@ -1,0 +1,15 @@
+<label>Name
+    <input type="text" name="name" value="<?= @$this->params['name'] ?>">
+</label>
+<label>Description
+    <input type="text" name="description" value="<?= @$this->params['description'] ?>">
+</label>
+<?php foreach($this->formatter_fields as $name => $field): ?>
+    <?php if ($field['type'] == 'select'): ?>
+
+    <?php else: ?>
+        <label><?= $field['label'] ?>
+            <input type="text" name="options[<?= $name ?>]" value="<?= @$this->params['options'][$name] ?>" placeholder="<?= @$field['placeholder'] ?>">
+        </label>
+    <?php endif; ?>
+<?php endforeach ?>

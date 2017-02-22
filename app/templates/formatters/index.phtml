@@ -1,0 +1,29 @@
+<?php $this->layout('default', [
+    'title' => 'Formatters',
+]); ?>
+
+<?php $this->section('content') ?>
+    <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+            <li><a href="<?= $this->pathFor('home') ?>">Home</a></li>
+            <li><span class="show-for-sr">Current: </span> Formatters</li>
+        </ul>
+    </nav>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th class="hide-for-small-only">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($this->formatters as $formatter): ?>
+                <tr>
+                    <td><a href="<?= $this->pathFor('formatters_edit', ['id' => $formatter->id]) ?>"><?= $formatter->name ?></a></td>
+                    <td class="hide-for-small-only"><?= $formatter->description ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php $this->replace() ?>

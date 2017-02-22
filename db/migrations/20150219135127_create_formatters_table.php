@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class FormattersTable extends AbstractMigration
+class CreateFormattersTable extends AbstractMigration
 {
     /**
      * Migrate Up.
@@ -15,6 +15,8 @@ class FormattersTable extends AbstractMigration
         ));
 
         $table->addColumn('name', 'string');
+        $table->addColumn('description', 'string');
+        $table->addColumn('formatter_type_id', 'string');
         $table->addColumn('options', 'text');
 
         // timestamps

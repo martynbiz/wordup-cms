@@ -42,20 +42,20 @@ $settings = [
             'file_path' => APPLICATION_PATH . '/languages/',
         ],
 
-        'auth' => [
-
-            // this is the session namespace
-            'namespace' => 'jt_sso__',
-
-            // remember me cookie settings
-            'auth_token' => [
-                'cookie_name' => 'auth_token',
-                'expire' => strtotime("+3 months", time()), // time in seconds from now, e.g. 1440 = 1h from now
-                'path' => '/',
-            ],
-
-            'cookie_domain' => null,
-        ],
+        // 'auth' => [
+        //
+        //     // this is the session namespace
+        //     'namespace' => 'jt_sso__',
+        //
+        //     // remember me cookie settings
+        //     'auth_token' => [
+        //         'cookie_name' => 'auth_token',
+        //         'expire' => strtotime("+3 months", time()), // time in seconds from now, e.g. 1440 = 1h from now
+        //         'path' => '/',
+        //     ],
+        //
+        //     'cookie_domain' => null,
+        // ],
 
         'mail' => [
 
@@ -65,6 +65,11 @@ $settings = [
             // reply to
             'reply_to' => 'noreply@sso.vagrant',
         ],
+
+        'formatters' => [
+            'navigation' => '\App\Formatter\Navigation',
+            // 'site_map' => '\App\Formatter\SiteMap',
+        ]
     ],
 ];
 
